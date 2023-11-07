@@ -42,5 +42,5 @@ import {
 
     @ManyToOne(() => CityEntity, (city) => city.addresses)
     @JoinColumn({name:'city_id', referencedColumnName:'id'})
-    city?: UserEntity
+    city?: CityEntity
   }
