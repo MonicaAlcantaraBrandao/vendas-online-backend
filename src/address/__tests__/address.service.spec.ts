@@ -25,7 +25,8 @@ describe('AddressService', () => {
           useValue: {
             findUserById:jest.fn().mockResolvedValue(userEntityMock),
           },
-        }, {
+        }, 
+        {
           provide:CityService,
           useValue: {
             findCityById:jest.fn().mockResolvedValue(cityMock),
