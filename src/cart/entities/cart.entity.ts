@@ -1,9 +1,10 @@
 // import { CartProductEntity } from '../../cart-product/entities/cart-product.entity';
+import { CartProductEntity } from '../../cart-product/entities/cart-product.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
-//   OneToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -25,6 +26,7 @@ export class CartEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-//   @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.cart)
-//   cartProduct?: CartProductEntity[];
+
+  @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.cart)
+  cartProduct?: CartProductEntity[];
 }
