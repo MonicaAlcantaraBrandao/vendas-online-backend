@@ -2,9 +2,9 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CartProductEntity } from './entities/cart-product.entity';
 import { Repository } from 'typeorm';
-import { InsertCartDto } from 'src/cart/dtos/insert-cart.dto';
-import { CartEntity } from 'src/cart/entities/cart.entity';
-import { ProductService } from 'src/product/product.service';
+import { InsertCartDto } from '../cart/dtos/insert-cart.dto';
+import { CartEntity } from '../cart/entities/cart.entity';
+import { ProductService } from '../product/product.service';
 
 @Injectable()
 export class CartProductService {
