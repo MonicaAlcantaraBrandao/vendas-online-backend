@@ -21,14 +21,14 @@ export class UserController {
 
   @Roles(UserType.Admin)
   @Get()
-  async getAllUsers():Promise<ReturnUserDto[]>{
-    return (await this.userService.getAllUsers()).map((userEntity) => new ReturnUserDto(userEntity));
+  async getAllUser():Promise<ReturnUserDto[]>{
+    return (await this.userService.getAllUser()).map((userEntity) => new ReturnUserDto(userEntity));
   }
 
   @Roles(UserType.Admin)
   @Get('/:userId')
   async getUserById(@Param('userId') userId: number): Promise<ReturnUserDto>{
-    return new ReturnUserDto(await this.userService.getUserbyIdUsingRelations(userId))
+    return new ReturnUserDto(await this.userService.getUserByIdUsingRelations(userId));
   }
 
   @Roles(UserType.Admin, UserType.User)

@@ -30,7 +30,7 @@ export class UserService {
         })
     }
 
-    async getUserbyIdUsingRelations(userId:number):Promise<UserEntity>{
+    async getUserByIdUsingRelations(userId:number):Promise<UserEntity>{
         return this.userRepository.findOne({
             where:{
                 id: userId
@@ -45,7 +45,7 @@ export class UserService {
         })
     }
 
-    async getAllUsers():Promise<UserEntity[]>{
+    async getAllUser():Promise<UserEntity[]>{
         return this.userRepository.find()
     }
 
