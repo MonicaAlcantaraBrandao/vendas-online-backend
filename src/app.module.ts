@@ -16,6 +16,8 @@ import { CartModule } from './cart/cart.module';
 import { CartProductModule } from './cart-product/cart-product.module';
 import { PaymentStatusModule } from './payment-status/payment-status.module';
 import { PaymentsModule } from './payments/payments.module';
+import { OrderModule } from './order/order.module';
+import { OrderProductModule } from './order-product/order-product.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -44,7 +46,9 @@ import { PaymentsModule } from './payments/payments.module';
   CartModule,
   CartProductModule,
   PaymentStatusModule,
-  PaymentsModule],
+  PaymentsModule,
+  OrderModule,
+  OrderProductModule],
   controllers: [],
   providers: [{provide: APP_GUARD,
     useClass: RolesGuard,}],
