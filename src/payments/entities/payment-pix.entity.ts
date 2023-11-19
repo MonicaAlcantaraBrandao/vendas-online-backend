@@ -1,6 +1,6 @@
 import { ChildEntity, Column } from 'typeorm';
 import { PaymentEntity } from './payment.entity';
-import { CreateOrderDto } from 'src/order/dtos/create-order.dto';
+import { CreateOrderDto } from '../../order/dtos/create-order.dto';
 
 @ChildEntity()
 export class PaymentPixEntity extends PaymentEntity {
@@ -15,10 +15,10 @@ export class PaymentPixEntity extends PaymentEntity {
     price: number,
     discount: number,
     finalPrice: number,
-    createOrderDTO: CreateOrderDto,
+    createOrderDto: CreateOrderDto,
   ) {
     super(statusId, price, discount, finalPrice);
-    this.code = createOrderDTO?.codePix || '';
-    this.datePayment = new Date(createOrderDTO?.datePayment || '');
+    this.code = createOrderDto?.codePix || '';
+    this.datePayment = new Date(createOrderDto?.datePayment || '');
   }
 }
