@@ -6,7 +6,7 @@ import {
     UsePipes,
     ValidationPipe,
   } from '@nestjs/common';
-  import { UserId } from 'src/decorators/user-id.decorator';
+  import { UserId } from '../decorators/user-id.decorator';
   import { CreateOrderDto } from './dtos/create-order.dto';
   import { OrderService } from './order.service';
   

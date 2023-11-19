@@ -5,8 +5,8 @@ import { OrderProductService } from '../order-product/order-product.service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrderEntity } from './entities/order.entity';
-import { PaymentEntity } from 'src/payments/entities/payment.entity';
-import { PaymentService } from 'src/payments/payment.service';
+import { PaymentEntity } from '../payments/entities/payment.entity';
+import { PaymentService } from '../payments/payment.service';
 
 @Injectable()
 export class OrderService {
