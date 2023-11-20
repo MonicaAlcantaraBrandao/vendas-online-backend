@@ -1,6 +1,6 @@
 import { AddressEntity } from '../../address/entities/address.entity';
 import { OrderProductEntity } from '../../order-product/entities/order-product.entity';
-import { PaymentEntity } from '../../payments/entities/payment.entity';
+import { PaymentEntity } from '../../payment/entities/payment.entity';
 import { UserEntity } from '../../user/entities/user.entity';
 import {
   Column,

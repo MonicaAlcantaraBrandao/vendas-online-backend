@@ -5,8 +5,8 @@ import { OrderProductModule } from '../order-product/order-product.module';
 import { OrderEntity } from './entities/order.entity';
 import { OrderController } from './order.controller';
 import { OrderService } from './order.service';
-import { PaymentModule } from '../payments/payment.module';
-import { ProductModule } from 'src/product/product.module';
+import { PaymentModule } from '../payment/payment.module';
+import { ProductModule } from '../product/product.module';
 
 @Module({
   imports: [

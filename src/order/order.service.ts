@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CartService } from '../cart/cart.service';
 import { OrderProductService } from '../order-product/order-product.service';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dtos/create-order.dto';
 import { OrderEntity } from './entities/order.entity';
-import { PaymentEntity } from '../payments/entities/payment.entity';
-import { PaymentService } from '../payments/payment.service';
-import { ProductService } from 'src/product/product.service';
-import { OrderProductEntity } from 'src/order-product/entities/order-product.entity';
-import { CartEntity } from 'src/cart/entities/cart.entity';
-import { ProductEntity } from 'src/product/entities/product.entity';
+import { PaymentEntity } from '../payment/entities/payment.entity';
+import { PaymentService } from '../payment/payment.service';
+import { ProductService } from '../product/product.service';
+import { OrderProductEntity } from '../order-product/entities/order-product.entity';
+import { CartEntity } from '../cart/entities/cart.entity';
+import { ProductEntity } from '../product/entities/product.entity';
 
 @Injectable()
 export class OrderService {
@@ -64,8 +64,30 @@ export class OrderService {
 
     await this.createOrderProductUsingCart(cart, order.id, products);
 
-    // await this.cartService.clearCart(userId);
+    await this.cartService.clearCart(userId);
 
     return order;
+  }
+
+  async findOrdersByUserId(userId: number): Promise<OrderEntity[]> {
+    const orders = await this.orderRepository.find({
+      where: {
+        userId
+      },
+      relations: {
+        address: true,
+        ordersProduct: {
+          product: true,
+        },
+        payment: {
+          paymentStatus: true
+        }
+      }
+    });
+
+    if(!orders || orders.length === 0) {
+      throw new NotFoundException('Orders not found');
+    }
+    return orders;
   }
 }
