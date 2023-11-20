@@ -4,6 +4,7 @@ import { UserController } from '../user.controller';
 import { UserService } from '../user.service';
 import { createUserMock } from '../__mocks__/createUser.mock';
 import { updatePasswordMock } from '../__mocks__/update-password.mock';
+import { ReturnUserDto } from '../dtos/returnUser.dto';
 
 
 describe('UserController', () => {
@@ -76,5 +77,13 @@ describe('UserController', () => {
     );
 
     expect(user).toEqual(userEntityMock);
+  });
+
+  it('should return userEntity in getInfoUser', async () => {
+    const user = await controller.getInfoUser(
+      userEntityMock.id,
+    );
+
+    expect(user).toEqual(new ReturnUserDto(userEntityMock));
   });
 });
