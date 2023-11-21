@@ -16,16 +16,16 @@ export class ReturnOrderDto {
     payment?: ReturnPaymentDto;
     amountProducts?: number;
 
-    constructor(order: OrderEntity) {
-        this.id = order.id;
-        this.date = order.date.toString();
-        this.userId = order.userId;
-        this.addressId = order.addressId;
-        this.paymentId = order.paymentId;
-        this.user = order.user ? new ReturnUserDto(order.user) : undefined;
-        this.address = order.address ? new ReturnAddressDto(order.address) : undefined;
-        this.ordersProduct = order.ordersProduct ? order.ordersProduct.map((orderProduct) => new ReturnOrderProductDto(orderProduct) ) : undefined;
-        this.payment = order.payment ? new ReturnPaymentDto(order.payment) : undefined;
-        this.amountProducts = order.amountProducts;
+    constructor(order?: OrderEntity) {
+        this.id = order?.id;
+        this.date = order?.date.toString();
+        this.userId = order?.userId;
+        this.addressId = order?.addressId;
+        this.paymentId = order?.paymentId;
+        this.user = order?.user ? new ReturnUserDto(order.user) : undefined;
+        this.address = order?.address ? new ReturnAddressDto(order.address) : undefined;
+        this.ordersProduct = order?.ordersProduct ? order.ordersProduct.map((orderProduct) => new ReturnOrderProductDto(orderProduct) ) : undefined;
+        this.payment = order?.payment ? new ReturnPaymentDto(order.payment) : undefined;
+        this.amountProducts = order?.amountProducts;
     }
 }
