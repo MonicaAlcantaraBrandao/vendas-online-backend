@@ -51,6 +51,7 @@ describe('OrderService', () => {
           provide: OrderProductService,
           useValue: {
             createOrderProduct: jest.fn().mockResolvedValue(orderProductMock),
+            findAmountProductsByOrderId: jest.fn().mockResolvedValue([]),
           },
         },
         {
@@ -174,7 +175,7 @@ describe('OrderService', () => {
       orderProductService,
       'createOrderProduct',
     );
-    const spyPaymentService = jest.spyOn(paymentService, 'createPayment');
+    const spyPaymentService = jest.spyOn(paymentService, 'createPayment');  
     const spySave = jest.spyOn(orderRepositoty, 'save');
 
     const order = await service.createOrder(

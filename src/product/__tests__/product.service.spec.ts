@@ -1,19 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ProductService } from '../product.service';
-import { ProductEntity } from '../entities/product.entity';
-import { In, Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { productMock } from '../__mocks__/product.mock';
-import { createProductMock } from '../__mocks__/create-product.mock';
 import { CategoryService } from '../../category/category.service';
 import { categoryMock } from '../../category/__mocks__/category.mock';
+import { In, Repository } from 'typeorm';
+import { ProductEntity } from '../entities/product.entity';
+import { ProductService } from '../product.service';
+import { createProductMock } from '../__mocks__/create-product.mock';
+import { productMock } from '../__mocks__/product.mock';
 import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
-import { updateProductMock } from '../__mocks__/update-product.mock';
+// import { CorreiosService } from '../../correios/correios.service';
 
 describe('ProductService', () => {
   let service: ProductService;
   let productRepository: Repository<ProductEntity>;
   let categoryService: CategoryService;
+  // let correiosService: CorreiosService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -21,31 +22,40 @@ describe('ProductService', () => {
         ProductService,
         {
           provide: CategoryService,
-          useValue:{
-            findCategoryById: jest.fn().mockResolvedValue(categoryMock)
-          }
+          useValue: {
+            findCategoryById: jest.fn().mockResolvedValue(categoryMock),
+          },
         },
+        // {
+        //   provide: CorreiosService,
+        //   useValue: {
+        //     priceDelivery: jest.fn().mockResolvedValue({}),
+        //   },
+        // },
         {
-        provide: getRepositoryToken(ProductEntity),
-        useValue:{
-          find: jest.fn().mockResolvedValue([productMock]),
-          findOne: jest.fn().mockResolvedValue(productMock),
-          save: jest.fn().mockResolvedValue(productMock),
-          delete: jest.fn().mockResolvedValue(returnDeleteMock),
-        }
-      }],
+          provide: getRepositoryToken(ProductEntity),
+          useValue: {
+            find: jest.fn().mockResolvedValue([productMock]),
+            findOne: jest.fn().mockResolvedValue(productMock),
+            save: jest.fn().mockResolvedValue(productMock),
+            delete: jest.fn().mockResolvedValue(returnDeleteMock),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<ProductService>(ProductService);
     categoryService = module.get<CategoryService>(CategoryService);
+    // correiosService = module.get<CorreiosService>(CorreiosService);
     productRepository = module.get<Repository<ProductEntity>>(
-      getRepositoryToken(ProductEntity));
+      getRepositoryToken(ProductEntity),
+    );
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
-    expect(productRepository).toBeDefined();
     expect(categoryService).toBeDefined();
+    expect(productRepository).toBeDefined();
   });
 
   it('should return all products', async () => {
@@ -54,30 +64,30 @@ describe('ProductService', () => {
     expect(products).toEqual([productMock]);
   });
 
-  it('should return relations in findAllProducts', async () => {
+  it('should return relations in find all products', async () => {
     const spy = jest.spyOn(productRepository, 'find');
     const products = await service.findAll([], true);
 
     expect(products).toEqual([productMock]);
     expect(spy.mock.calls[0][0]).toEqual({
-      relations:{
+      relations: {
         category: true,
-      }
+      },
     });
   });
 
-  it('should return relations and array in findAllProducts', async () => {
+  it('should return relatiosn and array in find all products', async () => {
     const spy = jest.spyOn(productRepository, 'find');
     const products = await service.findAll([1], true);
 
     expect(products).toEqual([productMock]);
     expect(spy.mock.calls[0][0]).toEqual({
-      where:{
+      where: {
         id: In([1]),
       },
-      relations:{
+      relations: {
         category: true,
-      }
+      },
     });
   });
 
@@ -99,9 +109,10 @@ describe('ProductService', () => {
     expect(product).toEqual(productMock);
   });
 
-  it('should return error in exception', async () => {
-    jest.spyOn(categoryService, 'findCategoryById')
-    .mockRejectedValue(new Error());
+  it('should return product after insert in DB', async () => {
+    jest
+      .spyOn(categoryService, 'findCategoryById')
+      .mockRejectedValue(new Error());
 
     expect(service.createProduct(createProductMock)).rejects.toThrowError();
   });
@@ -113,8 +124,7 @@ describe('ProductService', () => {
   });
 
   it('should return error in product not found', async () => {
-    jest.spyOn(productRepository, 'findOne')
-    .mockResolvedValue(undefined);
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
 
     expect(service.findProductById(productMock.id)).rejects.toThrowError();
   });
@@ -125,19 +135,20 @@ describe('ProductService', () => {
     expect(deleted).toEqual(returnDeleteMock);
   });
 
-  it('should return product after update', async () => {
+  it('should return produt after update', async () => {
     const product = await service.updateProduct(
-      updateProductMock, 
-      productMock.id);
+      createProductMock,
+      productMock.id,
+    );
 
     expect(product).toEqual(productMock);
   });
 
-  it('should return error in update product', async () => {
-    jest.spyOn(productRepository, 'save')
-    .mockRejectedValue(new Error());
+  it('should error in update product', async () => {
+    jest.spyOn(productRepository, 'save').mockRejectedValue(new Error());
 
-    expect(service.updateProduct(updateProductMock, productMock.id))
-    .rejects.toThrowError();
+    expect(
+      service.updateProduct(createProductMock, productMock.id),
+    ).rejects.toThrowError();
   });
 });
