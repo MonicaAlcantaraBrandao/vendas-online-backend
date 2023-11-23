@@ -7,18 +7,18 @@ import { SoapModule } from 'nestjs-soap';
 
 @Module({
   imports: [
-    SoapModule.register({ 
-      clientName: 'SOAP_CORREIOS', 
-      uri: 'https://shopping.correios.com.br/wbm/shopping/script/calcprecoprazo.asmx?WSDL' },
-    ),
+    SoapModule.register({
+      clientName: 'SOAP_CORREIOS',
+      uri: 'https://shopping.correios.com.br/wbm/shopping/script/calcprecoprazo.asmx?WSDL',
+    }),
     HttpModule.register({
       timeout: 5000,
       maxRedirects: 5,
     }),
-    CityModule
+    CityModule,
   ],
   providers: [CorreiosService],
   controllers: [CorreiosController],
-  exports: [CorreiosService]
+  exports: [CorreiosService],
 })
 export class CorreiosModule {}
