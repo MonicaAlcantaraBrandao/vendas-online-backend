@@ -41,7 +41,7 @@ import {
     async findAllCategories(): Promise<ReturnCategory[]> {
       const categories = await this.categoryRepository.find();
   
-      const count = await this.productService.countProductsByCategoryId();
+      const count = await this.productService.countProdutsByCategoryId();
   
       if (!categories || categories.length === 0) {
         throw new NotFoundException('Categories empty');

@@ -6,9 +6,9 @@ import { CreateProductDto } from './dtos/create-product.dto';
 import { CategoryService } from '../category/category.service';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { CountProduct } from './dtos/count-product.dto';
-import { SizeProductDto } from 'src/correios/dtos/size-product.dto';
-import { CorreiosService } from 'src/correios/correios.service';
-import { CdServiceEnum } from 'src/correios/enums/cd-service.enum';
+import { SizeProductDto } from '../correios/dtos/size-product.dto';
+import { CorreiosService } from '../correios/correios.service';
+import { CdServiceEnum } from '../correios/enums/cd-service.enum';
 import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
 
 @Injectable()
@@ -93,7 +93,7 @@ export class ProductService {
         });
     }
 
-    async countProductsByCategoryId(): Promise<CountProduct[]> {
+    async countProdutsByCategoryId(): Promise<CountProduct[]> { 
         return this.productRepository.createQueryBuilder('product')
         .select('product.category_id, COUNT(*) as total')
         .groupBy('product.category_id')
