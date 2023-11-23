@@ -1,15 +1,35 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class CreateProductDto{
-    @IsNumber()
-    categoryId: number;
+export class CreateProductDto {
+  @IsNumber()
+  categoryId: number;
 
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsNumber()
-    price: number;
+  @IsNumber()
+  price: number;
 
-    @IsString()
-    image: string;
+  @IsString()
+  image: string;
+
+  @IsOptional()
+  @IsNumber()
+  weight?: number;
+
+  @IsOptional()
+  @IsNumber()
+  length?: number;
+
+  @IsOptional()
+  @IsNumber()
+  height?: number;
+
+  @IsOptional()
+  @IsNumber()
+  width?: number;
+
+  @IsOptional()
+  @IsNumber()
+  diameter?: number;
 }

@@ -1,6 +1,6 @@
 import { ProductEntity } from '../../product/entities/product.entity';
 
-export class SizeProductDTO {
+export class SizeProductDto {
   weight: number;
   length: number;
   height: number;

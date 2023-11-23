@@ -1,15 +1,30 @@
-import { IsNumber, IsString } from "class-validator";
+import { IsNumber,   IsString } from 'class-validator';
 
-export class UpdateProductDto{
-    @IsNumber()
-    categoryId: number;
+export class UpdateProductDto {
+  @IsNumber()
+  categoryId: number;
 
-    @IsString()
-    name: string;
+  @IsString()
+  name: string;
 
-    @IsNumber()
-    price: number;
+  @IsNumber()
+  price: number;
 
-    @IsString()
-    image: string;
+  @IsString()
+  image: string;
+
+  @IsNumber()
+  weight?: number;
+
+  @IsNumber()
+  length?: number;
+
+  @IsNumber()
+  height?: number;
+
+  @IsNumber()
+  width?: number;
+
+  @IsNumber()
+  diameter?: number;
 }
