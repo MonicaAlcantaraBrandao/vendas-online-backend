@@ -1,4 +1,4 @@
-export interface ResponsePriceCorreios {
+export interface ResponsePriceCorreiosDto {
     CalcPrecoPrazoResult: CalcPrecoPrazoResult;
   }
   

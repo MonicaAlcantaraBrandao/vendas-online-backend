@@ -11,7 +11,7 @@ import { CityEntity } from '../city/entities/city.entity';
 import { ReturnCepExternalDto } from './dtos/return-cep-external.dto';
 import { ReturnCepDto } from './dtos/return-cep.dto';
 import { SizeProductDto } from './dtos/size-product.dto';
-import { ResponsePriceCorreios } from './dtos/response-price-correios.dto';
+import { ResponsePriceCorreiosDto } from './dtos/response-price-correios.dto';
 import { CdFormatEnum } from './enums/cd-format.enum';
 import { Client } from 'nestjs-soap';
 
@@ -52,7 +52,7 @@ export class CorreiosService {
     cdService: string,
     cep: string,
     sizeProduct: SizeProductDto,
-  ): Promise<ResponsePriceCorreios> {
+  ): Promise<ResponsePriceCorreiosDto> {
     return new Promise((resolve) => {
       this.soapClient.CalcPrecoPrazo(
         {
@@ -71,7 +71,7 @@ export class CorreiosService {
             nVlValorDeclarado: sizeProduct.productValue < 25 ? 0 : sizeProduct.productValue,
             sCdAvisoRecebimento: 'N'
         },
-        (_, res: ResponsePriceCorreios) => {
+        (_, res: ResponsePriceCorreiosDto) => {
           if (res) {
             resolve(res);
           } else {
