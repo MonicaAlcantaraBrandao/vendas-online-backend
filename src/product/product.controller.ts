@@ -19,6 +19,7 @@ import {
 import { ReturnProductDto } from './dtos/return-product.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
+import { Pagination } from 'src/dtos/pagination.dto';
   
   @Controller('product')
   export class ProductController {
@@ -34,10 +35,12 @@ import { UpdateProductDto } from './dtos/update-product.dto';
   
     @Roles(UserType.Admin, UserType.Root, UserType.User)
     @Get('/page')
-    async findAllPage(@Query('search') search: string): Promise<ReturnProductDto[]> {
-      return (await this.productService.findAllPage(search)).map(
-        (product) => new ReturnProductDto(product),
-      );
+    async findAllPage(
+        @Query('search') search?: string,
+        @Query('size') size?: number,
+        @Query('page') page?: number,
+        ): Promise<Pagination<ReturnProductDto[]>> {
+      return this.productService.findAllPage(search, size, page);
     }
   
     @Roles(UserType.Admin, UserType.Root, UserType.User)

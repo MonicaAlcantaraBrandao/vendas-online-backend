@@ -16,6 +16,10 @@ import { ReturnPriceDeliveryDto } from './dtos/return-price-delivery.dto';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { SizeProductDto } from 'src/correios/dtos/size-product.dto';
+import { Pagination, PaginationMeta } from 'src/dtos/pagination.dto';
+
+const DEFAULT_PAGE_SIZE = 10;
+const FIRST_PAGE = 1;
   
   @Injectable()
   export class ProductService {
@@ -29,22 +33,42 @@ import { SizeProductDto } from 'src/correios/dtos/size-product.dto';
       private readonly correiosService: CorreiosService,
     ) {}
   
-    async findAllPage(search?: string): Promise<ProductEntity[]> {
-      let findOptions = {};
-      if (search) {
-        findOptions = {
-          where: {
-            name: ILike(`%${search}%`),
-          },
-        };
-      }
-      const products = await this.productRepository.find(findOptions);
+    async findAllPage(
+        search?: string, 
+        size = DEFAULT_PAGE_SIZE,
+        page = FIRST_PAGE,
+        ): Promise<Pagination<ProductEntity[]>> {
+        const skip = (page - 1) * size;
+
+        let findOptions = {};
+        if (search) {
+            findOptions = {
+                where: {
+                    name: ILike(`%${search}%`),
+                },
+                take: size,
+                skip,
+            };
+        }
+            const [products, total] = await this.productRepository.findAndCount({ 
+                ...findOptions,
+                take: size,
+                skip,
+            });
   
-      if (!products || products.length === 0) {
-        throw new NotFoundException('Not found products');
-      }
+        if (!products || products.length === 0) {
+            throw new NotFoundException('Not found products');
+        }
   
-      return products;
+            return new Pagination(
+            new PaginationMeta(
+                Number(size), 
+                total, 
+                Number(page), 
+                Math.ceil(total / size)
+            ),
+            products
+        );
     }
   
     async findAll(
