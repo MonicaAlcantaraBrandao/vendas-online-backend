@@ -54,5 +54,14 @@ import { UpdateCategoryDto } from './dtos/update-category.dto';
     ): Promise<CategoryEntity> {
       return this.categoryService.editCategory(categoryId, updateCategory);
     }
+
+    @Get(':categoryId')
+  async findCategoryById(
+    @Param('categoryId') categoryId: number,
+  ): Promise<ReturnCategory> {
+    return new ReturnCategory(
+      await this.categoryService.findCategoryById(categoryId, true),
+    );
+  }
   }
   
