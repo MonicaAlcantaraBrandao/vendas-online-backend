@@ -1,7 +1,7 @@
 import { categoryMock } from '../../category/__mocks__/category.mock';
-import { CountProduct } from '../dtos/count-product.dto';
+import { CountProductDto } from '../dtos/count-product.dto';
 
-export const countProductMock: CountProduct = {
+export const countProductMock: CountProductDto = {
   category_id: categoryMock.id,
   total: 4,
 };

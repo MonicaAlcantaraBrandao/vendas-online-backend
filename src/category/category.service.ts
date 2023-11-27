@@ -6,7 +6,7 @@ import {
     NotFoundException,
   } from '@nestjs/common';
   import { InjectRepository } from '@nestjs/typeorm';
-  import { CountProduct } from '../product/dtos/count-product.dto';
+  import { CountProductDto } from '../product/dtos/count-product.dto';
   import { ProductService } from '../product/product.service';
   import { DeleteResult, Repository } from 'typeorm';
   import { CreateCategory } from './dtos/create-category.dto';
@@ -26,7 +26,7 @@ import { UpdateCategoryDto } from './dtos/update-category.dto';
   
     findAmountCategoryInProducts(
       category: CategoryEntity,
-      countList: CountProduct[],
+      countList: CountProductDto[],
     ): number {
       const count = countList.find(
         (itemCount) => itemCount.category_id === category.id,
